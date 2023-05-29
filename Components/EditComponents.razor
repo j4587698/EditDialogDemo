@@ -1,0 +1,18 @@
+@using System.Diagnostics.CodeAnalysis
+<h3>这里是一个复杂的弹窗组件，不能用简单的自动生成</h3>
+
+<BootstrapInput @bind-Value="Model.Name"></BootstrapInput>
+<BootstrapInput @bind-Value="Model.Address"></BootstrapInput>
+<BootstrapInput @bind-Value="Model.Count"></BootstrapInput>
+
+@code {
+    // 这个玩意应该怎么传进来?
+    [NotNull]
+    [Parameter]
+    public Foo? Model { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        Model = new Foo();
+    }
+}

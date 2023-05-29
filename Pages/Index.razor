@@ -1,0 +1,32 @@
+﻿@page "/"
+@using EditDialogDemo.Shared
+@using EditDialogDemo.Components
+@inject DialogService DialogService
+@attribute [TabItemOption(Text = "Index", Closable = false)]
+<PageTitle>Index</PageTitle>
+
+点击弹窗按钮打开EditDialog
+
+<Button Text="弹出EditDialog" OnClick="ShowEditDialog"></Button>
+
+@code {
+    private void ShowEditDialog()
+    {
+        Foo foo = new Foo();
+        foo.Name = "我是Foo";
+        DialogService.ShowEditDialog(new EditDialogOption<Foo>()
+        {
+            Title = "如何把我的Foo传进去？",
+            Model = foo,
+            ShowFooter = true,
+            // 这个好像调用到了通用的Dialog里？
+            BodyTemplate = BootstrapDynamicComponent.CreateComponent<EditComponents>().Render(),
+            //这个报错，因为类型不匹配？这里应该怎么写呢？        
+            //DialogBodyTemplate = BootstrapDynamicComponent.CreateComponent<EditComponents>().Render(),
+            OnSaveAsync = () =>
+            {
+                return Task.FromResult(true);
+            }
+        });
+    }
+}
